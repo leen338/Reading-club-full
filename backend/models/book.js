@@ -59,6 +59,7 @@ const bookSchema=new mongoose.Schema({
             }
         }
     ],
+    moods:[String],
     createdAt:{
         type:Date,
         default:Date.now

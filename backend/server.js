@@ -41,7 +41,7 @@ app.use("/api",require("./routes/auth"))
 app.use("/api/books",require("./routes/book"))
 app.use("/api/messages",require("./routes/message"))
 app.use("/api/summary",require("./routes/summary"))
-
+app.use("/uploads",express.static("uploads"))
 
 //connect to mongodb
 mongoose.connect(process.env.MONGO_URL,{
