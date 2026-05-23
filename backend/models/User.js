@@ -23,6 +23,30 @@ const userSchema=new mongoose.Schema({
         type:Date,
         default:Date.now
     }
+
+    ,
+
+readingGoal: {
+  type: Number,
+  default: 12
+},
+
+booksRead: {
+  type: Number,
+  default: 0
+},
+
+points: {
+  type: Number,
+  default: 0
+},
+
+badges: {
+  type: [String],
+  default: []
+}
+
+
     
 })
 

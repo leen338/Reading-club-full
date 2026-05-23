@@ -1,6 +1,7 @@
 const express= require ("express")
 const { default: mongoose } = require("mongoose")
 require("dotenv").config()
+const gamificationRoutes = require("./gamification/gamificationRoutes");
 const cors=require("cors")
 const http=require("http")
 const {Server}=require("socket.io")
@@ -29,6 +30,8 @@ io.on("connection",(socket)=>{
 })
 
 //middleware
+
+app.use("/api/gamification", gamificationRoutes);
 app.use(express.json())
 app.use(cors())
 
