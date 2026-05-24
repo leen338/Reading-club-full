@@ -6,7 +6,7 @@ const cors=require("cors")
 const http=require("http")
 const {Server}=require("socket.io")
 const Message = require("./models/message")
-
+const bookRoutes = require("./routes/book");
 const app=express()
 
 const server=http.createServer(app)
@@ -42,7 +42,7 @@ app.use("/api/books",require("./routes/book"))
 app.use("/api/messages",require("./routes/message"))
 app.use("/api/summary",require("./routes/summary"))
 app.use("/uploads",express.static("uploads"))
-
+app.use("/books", bookRoutes);
 //connect to mongodb
 mongoose.connect(process.env.MONGO_URL,{
     // useNewUrlParser:true,

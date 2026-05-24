@@ -63,8 +63,9 @@ const bookSchema=new mongoose.Schema({
     createdAt:{
         type:Date,
         default:Date.now
-    }
-
+    },
+    isbn: { type: String, required: true, unique: true }
+    
 })
 
 const Book=mongoose.model("Book",bookSchema)
