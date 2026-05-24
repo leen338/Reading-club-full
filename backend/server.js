@@ -1,6 +1,6 @@
+require("dotenv").config()
 const express= require ("express")
 const { default: mongoose } = require("mongoose")
-require("dotenv").config()
 const gamificationRoutes = require("./gamification/gamificationRoutes");
 const cors=require("cors")
 const http=require("http")
@@ -16,7 +16,7 @@ const io=new Server(server,{
         origin:"*"
     }
 })
-
+console.log("MONGO:", process.env.MONGO_URL);
 
 io.on("connection",(socket)=>{
     console.log("User connected")
