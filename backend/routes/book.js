@@ -32,7 +32,7 @@ router.post("/",auth,async(req,res)=>{
 //get/api/book
 router.get("/",async(req,res)=>{
     try{
-        const books=await Book.find().populate("addedBy","name email")
+        const books=await Book.find()
         res.json(books)
     }catch(err){
         console.log(err.message)
@@ -41,9 +41,25 @@ router.get("/",async(req,res)=>{
 })
 
 
+
+router.get("/search",async(req,res)=>{
+    try{
+        const title=req.query.title
+        const books=await Book.find({
+            title:{$regex:title, $options:"i"}
+        })
+        res.json(books)
+    }catch(err){
+        console.log(err.message)
+        res.status(500).json({
+            msg:"server error"
+        })
+    }
+})
+
 router.get("/:id",auth,async(req,res)=>{
     try{
-        const book=await Book.findById(req.params.id).populate("addedBy","name email")
+        const book=await Book.findById(req.params.id)
         res.json(book)
     }catch(err){
         console.log(err.message)
@@ -226,6 +242,7 @@ router.get("/:id/rating",async(req,res)=>{
         })
     }
 })
+
 
 
 module.exports=router
