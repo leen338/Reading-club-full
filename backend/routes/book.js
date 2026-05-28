@@ -279,5 +279,72 @@ router.get("/:id/rating",async(req,res)=>{
 })
 
 
+router.put("/:bookId/comment/:commentId",auth,async(req,res)=>{
+    try{
+        const book=await Book.findById(req.params.bookId)
+        if(!book){
+            return res.status(404).json({
+                msg:"book not found"
+            })
+        }
+        const comment=book.comments.id(req.params.commentId)
+        if(!comment){
+            return res.status(404).json({
+                msg:"comment not found"
+            })
+        }
+        if(comment.userId.toString()!==req.user.id){
+            return res.status(401).json({
+                msg:"not authorized"
+            })
+        }
+        comment.text=req.body.text
+        await book.save()
+
+        res.json({
+            msg:"comment updated",
+            comments:book.comments
+        })
+    }catch(err){
+        res.status(500).json({
+            msg:"server error"
+        })
+    }
+})
+
+
+router.delete("/:bookId/comment/:commentId",auth,async(req,res)=>{
+    try{
+        const book=await Book.findById(req.params.bookId)
+        if(!book){
+            return res.status(404).json({
+                msg:"book not found"
+            })
+        }
+        const comment=book.comments.id(req.params.commentId)
+        if(!comment){
+            return res.status(404).json({
+                msg:"comment not found"
+            })
+        }
+        if(comment.userId.toString()!==req.user.id){
+            return res.status(401).json({
+                msg:"not authorized"
+            })
+        }
+        comment.deleteOne()
+        await book.save()
+
+        res.json({
+            msg:"comment deleted",
+            comments:book.comments
+        })
+    }catch(err){
+        res.status(500).json({
+            msg:"server error"
+        })
+    }
+})
+
 
 module.exports=router
