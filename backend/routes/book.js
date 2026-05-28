@@ -40,6 +40,18 @@ router.get("/",async(req,res)=>{
     }
 })
 
+router.get("/mood/:mood",async(req,res)=>{
+    try{
+        const books=await Book.find({
+            moods:req.params.mood
+        })
+        res.json(books)
+    }catch(err){
+        console.log(err.message)
+        res.status(500).json("server error")
+    }
+})
+
 
 
 router.get("/search",async(req,res)=>{
