@@ -57,6 +57,29 @@ router.get("/search",async(req,res)=>{
     }
 })
 
+router.get("/isbn/:isbn", async (req, res) => {
+  try {
+    const { isbn } = req.params;
+
+    const book = await Book.findOne({ isbn });
+
+    if (!book) {
+      return res.status(404).json({
+        message: "Book not found"
+      });
+    }
+
+    res.status(200).json(book);
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
+      error: error.message
+    });
+  }
+});
+
+
 router.get("/:id",auth,async(req,res)=>{
     try{
         const book=await Book.findById(req.params.id)
